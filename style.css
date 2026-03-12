@@ -86,24 +86,24 @@ button:hover {
   background: #ff4f87;
 }
 
+#yesButton {
+  position: absolute;
+  right: calc(50% + 12px);
+  top: 0;
+}
+
 #noButton {
   background: #ffd6e2;
   color: #8b3a57;
   box-shadow: 0 8px 18px rgba(255, 107, 154, 0.12);
   position: absolute;
-  left: calc(50% + 10px);
-  top: 0;
-}
-
-#yesButton {
-  position: absolute;
-  right: calc(50% + 10px);
+  left: calc(50% + 12px);
   top: 0;
 }
 
 .button-row {
   position: relative;
-  height: 64px;
+  height: 72px;
   margin-top: 20px;
   margin-bottom: 10px;
 }
@@ -131,6 +131,24 @@ button:hover {
   background: rgba(255, 214, 226, 0.45);
 }
 
+.early-wrap {
+  margin-top: 10px;
+}
+
+.early-btn {
+  background: transparent;
+  border: none;
+  color: #b78a99;
+  font-size: 0.78rem;
+  padding: 6px 10px;
+  opacity: 0.75;
+}
+
+.early-btn:hover {
+  opacity: 1;
+  background: transparent;
+}
+
 .modal {
   position: fixed;
   inset: 0;
@@ -147,7 +165,7 @@ button:hover {
 }
 
 .modal-card {
-  width: min(420px, 92vw);
+  width: min(440px, 92vw);
   background: white;
   border-radius: 22px;
   padding: 28px 24px;
