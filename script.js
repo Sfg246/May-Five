@@ -21,6 +21,9 @@ let isUnlocked = false;
 let noClickCount = 0;
 let confirmStage = 0;
 
+confirmModal.classList.add("hidden");
+secretModal.classList.add("hidden");
+
 function updateCountdown() {
   const now = new Date().getTime();
   const distance = targetDate - now;
