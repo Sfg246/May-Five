@@ -1,8 +1,8 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(180deg, #fff5f5 0%, #ffe3e3 100%);
-  color: #4a1515;
+  background: linear-gradient(180deg, #fff1f1 0%, #ffd6d6 100%);
+  color: #3f0d0d;
   overflow-x: hidden;
   min-height: 100vh;
   transition: background 0.5s ease, color 0.5s ease;
@@ -20,30 +20,30 @@ body {
 h1 {
   font-size: 3rem;
   margin-bottom: 10px;
-  color: #b91c1c;
+  color: #991b1b;
 }
 
 .subtitle {
   font-size: 1.15rem;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   color: #7f1d1d;
 }
 
 .favorite-color-note {
-  font-size: 1rem;
+  font-size: 0.88rem;
   margin-bottom: 30px;
-  color: #991b1b;
-  line-height: 1.6;
+  color: #7a1010;
+  line-height: 1.5;
 }
 
 .countdown-box,
 .locked-box {
-  background: rgba(255, 255, 255, 0.92);
-  border: 2px solid rgba(220, 38, 38, 0.18);
+  background: rgba(255, 255, 255, 0.94);
+  border: 2px solid rgba(153, 27, 27, 0.18);
   border-radius: 24px;
   padding: 30px 25px;
   margin-bottom: 24px;
-  box-shadow: 0 12px 30px rgba(185, 28, 28, 0.12);
+  box-shadow: 0 12px 30px rgba(127, 29, 29, 0.12);
   backdrop-filter: blur(6px);
   transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
 }
@@ -51,7 +51,7 @@ h1 {
 .countdown-box h2,
 .locked-box h2 {
   margin-top: 0;
-  color: #b91c1c;
+  color: #991b1b;
   font-size: 2rem;
 }
 
@@ -59,7 +59,7 @@ h1 {
   font-size: 2rem;
   font-weight: bold;
   margin-top: 10px;
-  color: #991b1b;
+  color: #7f1d1d;
 }
 
 .locked-box p {
@@ -83,15 +83,15 @@ button:hover {
 #yesButton,
 #confirmYes,
 #confirmNo {
-  background: #dc2626;
+  background: #b91c1c;
   color: white;
-  box-shadow: 0 8px 18px rgba(220, 38, 38, 0.25);
+  box-shadow: 0 8px 18px rgba(185, 28, 28, 0.25);
 }
 
 #yesButton:hover,
 #confirmYes:hover,
 #confirmNo:hover {
-  background: #b91c1c;
+  background: #991b1b;
 }
 
 #yesButton {
@@ -102,8 +102,8 @@ button:hover {
 
 #noButton {
   background: #fee2e2;
-  color: #991b1b;
-  box-shadow: 0 8px 18px rgba(220, 38, 38, 0.12);
+  color: #7f1d1d;
+  box-shadow: 0 8px 18px rgba(185, 28, 28, 0.12);
   position: absolute;
   left: calc(50% + 12px);
   top: 0;
@@ -119,7 +119,7 @@ button:hover {
 .button-hint {
   margin-top: 12px;
   font-size: 0.98rem;
-  color: #991b1b;
+  color: #7f1d1d;
   min-height: 24px;
 }
 
@@ -129,8 +129,8 @@ button:hover {
 
 .secret-btn {
   background: transparent;
-  border: 1px dashed #ef4444;
-  color: #991b1b;
+  border: 1px dashed #b91c1c;
+  color: #7f1d1d;
   font-size: 0.92rem;
   padding: 10px 18px;
 }
@@ -166,7 +166,7 @@ button:hover {
 
 .modal-card h3 {
   margin-top: 0;
-  color: #b91c1c;
+  color: #991b1b;
 }
 
 .modal-card p {
@@ -191,10 +191,10 @@ button:hover {
   align-items: center;
   justify-content: center;
   background: #fef2f2;
-  color: #b91c1c;
+  color: #991b1b;
   font-size: 1.4rem;
   font-weight: bold;
-  border: 2px solid rgba(185, 28, 28, 0.18);
+  border: 2px solid rgba(153, 27, 27, 0.18);
 }
 
 .close-btn {
@@ -202,7 +202,7 @@ button:hover {
   top: 10px;
   right: 12px;
   background: transparent;
-  color: #991b1b;
+  color: #7f1d1d;
   font-size: 1.5rem;
   padding: 4px 10px;
   box-shadow: none;
@@ -322,7 +322,7 @@ button:hover {
 .message-btn {
   background: transparent;
   border: 1px solid #fca5a5;
-  color: #991b1b;
+  color: #7f1d1d;
   font-size: 0.9rem;
   padding: 10px 18px;
 }
@@ -353,7 +353,7 @@ button:hover {
   min-height: 22px;
   margin-top: 14px;
   font-size: 0.95rem;
-  color: #991b1b;
+  color: #7f1d1d;
 }
 
 #sendSecretMessageButton,
@@ -361,9 +361,9 @@ button:hover {
 #earlyYesButton,
 #earlyNoButton,
 #finalMay5YesButton {
-  background: #dc2626;
+  background: #b91c1c;
   color: white;
-  box-shadow: 0 8px 18px rgba(220, 38, 38, 0.25);
+  box-shadow: 0 8px 18px rgba(185, 28, 28, 0.25);
 }
 
 #sendSecretMessageButton:hover,
@@ -371,7 +371,7 @@ button:hover {
 #earlyYesButton:hover,
 #earlyNoButton:hover,
 #finalMay5YesButton:hover {
-  background: #b91c1c;
+  background: #991b1b;
 }
 
 @keyframes floatDown {
