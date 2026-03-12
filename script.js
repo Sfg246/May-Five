@@ -1,8 +1,7 @@
 const countdown = document.getElementById("countdown");
-const proposalBox = document.getElementById("proposalBox");
-const lockedButton = document.getElementById("lockedButton");
-const noButton = document.getElementById("noButton");
 const yesButton = document.getElementById("yesButton");
+const noButton = document.getElementById("noButton");
+const buttonHint = document.getElementById("buttonHint");
 const buttonArea = document.getElementById("buttonArea");
 const mainSite = document.getElementById("mainSite");
 
@@ -18,6 +17,7 @@ const confirmNo = document.getElementById("confirmNo");
 
 const targetDate = new Date("May 5, 2026 00:00:00").getTime();
 
+let isUnlocked = false;
 let noClickCount = 0;
 let confirmStage = 0;
 
@@ -26,9 +26,9 @@ function updateCountdown() {
   const distance = targetDate - now;
 
   if (distance <= 0) {
+    isUnlocked = true;
     countdown.textContent = "The wait is over 💖";
-    lockedButton.style.display = "none";
-    proposalBox.classList.remove("hidden");
+    buttonHint.textContent = "You can answer now.";
     return;
   }
 
@@ -40,33 +40,13 @@ function updateCountdown() {
   countdown.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 }
 
-updateCountdown();
-setInterval(updateCountdown, 1000);
-
-secretButton.addEventListener("click", () => {
-  secretModal.classList.remove("hidden");
-});
-
-closeSecretModal.addEventListener("click", () => {
-  secretModal.classList.add("hidden");
-});
-
-secretModal.addEventListener("click", (e) => {
-  if (e.target === secretModal) {
-    secretModal.classList.add("hidden");
-  }
-});
-
-yesButton.addEventListener("click", () => {
-  alert("Yay 💖");
-});
-
 function moveNoButton() {
-  const areaWidth = buttonArea.offsetWidth;
-  const areaHeight = buttonArea.offsetHeight;
+  const areaRect = buttonArea.getBoundingClientRect();
+  const buttonWidth = noButton.offsetWidth;
+  const buttonHeight = noButton.offsetHeight;
 
-  const maxX = Math.max(areaWidth - noButton.offsetWidth - 10, 0);
-  const maxY = Math.max(areaHeight - noButton.offsetHeight - 10, 0);
+  const maxX = Math.max(areaRect.width - buttonWidth, 0);
+  const maxY = Math.max(120 - buttonHeight, 0);
 
   const randomX = Math.floor(Math.random() * (maxX + 1));
   const randomY = Math.floor(Math.random() * (maxY + 1));
@@ -104,9 +84,50 @@ function changeWholeWebsite() {
   `;
 }
 
-noButton.addEventListener("mouseenter", moveNoButton);
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+secretButton.addEventListener("click", () => {
+  secretModal.classList.remove("hidden");
+});
+
+closeSecretModal.addEventListener("click", () => {
+  secretModal.classList.add("hidden");
+});
+
+secretModal.addEventListener("click", (e) => {
+  if (e.target === secretModal) {
+    secretModal.classList.add("hidden");
+  }
+});
+
+yesButton.addEventListener("mouseenter", () => {
+  if (!isUnlocked) {
+    buttonHint.textContent = "Not yet. This button stays locked until May 5.";
+  }
+});
+
+yesButton.addEventListener("click", () => {
+  if (!isUnlocked) {
+    buttonHint.textContent = "Still locked. Come back on May 5 💖";
+    return;
+  }
+
+  buttonHint.textContent = "Yay 💖";
+});
+
+noButton.addEventListener("mouseenter", () => {
+  if (isUnlocked) {
+    moveNoButton();
+  }
+});
 
 noButton.addEventListener("click", () => {
+  if (!isUnlocked) {
+    buttonHint.textContent = "You can say no early... but I hope you don’t.";
+    return;
+  }
+
   noClickCount++;
 
   if (noClickCount < 3) {
