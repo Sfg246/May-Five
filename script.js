@@ -26,6 +26,7 @@ let isUnlocked = false;
 let noInteractions = 0;
 let confirmStage = 0;
 let countdownInterval = null;
+let noMoveInterval = null;
 
 confirmModal.classList.add("hidden");
 secretModal.classList.add("hidden");
@@ -52,6 +53,9 @@ function updateCountdown() {
 }
 
 function moveNoButton() {
+  if (confirmStage > 0) return;
+  if (!noButton || !buttonArea) return;
+
   const areaWidth = buttonArea.offsetWidth;
   const areaHeight = buttonArea.offsetHeight;
   const buttonWidth = noButton.offsetWidth;
@@ -72,10 +76,20 @@ function moveNoButton() {
   noButton.style.top = `${randomY}px`;
 }
 
-function maybeMoveNoButton() {
-  const shouldMove = Math.random() < 0.45;
-  if (shouldMove) {
+function startNoMovement() {
+  if (noMoveInterval) {
+    clearInterval(noMoveInterval);
+  }
+
+  noMoveInterval = setInterval(() => {
     moveNoButton();
+  }, 2000);
+}
+
+function stopNoMovement() {
+  if (noMoveInterval) {
+    clearInterval(noMoveInterval);
+    noMoveInterval = null;
   }
 }
 
@@ -84,14 +98,20 @@ function openConfirm(title, text) {
   confirmText.textContent = text;
   confirmTimer.classList.add("hidden");
   confirmModal.classList.remove("hidden");
+  stopNoMovement();
 }
 
 function closeConfirm() {
   confirmModal.classList.add("hidden");
   confirmTimer.classList.add("hidden");
+
   if (countdownInterval) {
     clearInterval(countdownInterval);
     countdownInterval = null;
+  }
+
+  if (!document.body.classList.contains("sad-site")) {
+    startNoMovement();
   }
 }
 
@@ -123,6 +143,7 @@ function startThirtySecondTimer() {
 }
 
 function makeSiteSad() {
+  stopNoMovement();
   document.body.classList.add("sad-site");
   brokenHearts.classList.remove("hidden");
 
@@ -149,6 +170,7 @@ function makeSiteSad() {
 
 updateCountdown();
 setInterval(updateCountdown, 1000);
+startNoMovement();
 
 secretButton.addEventListener("click", () => {
   secretModal.classList.remove("hidden");
@@ -190,28 +212,21 @@ earlyModal.addEventListener("click", (e) => {
   }
 });
 
-noButton.addEventListener("mouseenter", () => {
-  maybeMoveNoButton();
-});
-
 noButton.addEventListener("click", () => {
   noInteractions += 1;
 
   if (noInteractions <= 2) {
     buttonHint.textContent = "This is my way of fighting for this.";
-    maybeMoveNoButton();
     return;
   }
 
   if (noInteractions === 3) {
     buttonHint.textContent = "Nooo, I’ll fight harder.";
-    maybeMoveNoButton();
     return;
   }
 
   if (noInteractions === 4) {
     buttonHint.textContent = "Wait... you really wanna press no?";
-    maybeMoveNoButton();
     return;
   }
 
@@ -223,6 +238,7 @@ noButton.addEventListener("click", () => {
 });
 
 confirmNo.addEventListener("click", () => {
+  confirmStage = 0;
   closeConfirm();
 });
 
