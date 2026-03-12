@@ -2,7 +2,6 @@ const countdown = document.getElementById("countdown");
 const yesButton = document.getElementById("yesButton");
 const noButton = document.getElementById("noButton");
 const buttonHint = document.getElementById("buttonHint");
-const buttonArea = document.getElementById("buttonArea");
 const mainSite = document.getElementById("mainSite");
 
 const secretButton = document.getElementById("secretButton");
@@ -15,6 +14,7 @@ const confirmText = document.getElementById("confirmText");
 const confirmYes = document.getElementById("confirmYes");
 const confirmNo = document.getElementById("confirmNo");
 
+const buttonArea = document.getElementById("buttonArea");
 const targetDate = new Date("May 5, 2026 00:00:00").getTime();
 
 let isUnlocked = false;
@@ -27,8 +27,8 @@ function updateCountdown() {
 
   if (distance <= 0) {
     isUnlocked = true;
-    countdown.textContent = "The wait is over 💖";
-    buttonHint.textContent = "You can answer now.";
+    countdown.textContent = "It’s finally May 5 💖";
+    buttonHint.textContent = "The yes button is finally unlocked.";
     return;
   }
 
@@ -41,17 +41,17 @@ function updateCountdown() {
 }
 
 function moveNoButton() {
-  const areaRect = buttonArea.getBoundingClientRect();
+  const areaWidth = buttonArea.offsetWidth;
+  const areaHeight = buttonArea.offsetHeight;
   const buttonWidth = noButton.offsetWidth;
   const buttonHeight = noButton.offsetHeight;
 
-  const maxX = Math.max(areaRect.width - buttonWidth, 0);
-  const maxY = Math.max(120 - buttonHeight, 0);
+  const maxX = Math.max(areaWidth - buttonWidth, 0);
+  const maxY = Math.max(areaHeight - buttonHeight, 0);
 
   const randomX = Math.floor(Math.random() * (maxX + 1));
   const randomY = Math.floor(Math.random() * (maxY + 1));
 
-  noButton.style.position = "absolute";
   noButton.style.left = `${randomX}px`;
   noButton.style.top = `${randomY}px`;
 }
@@ -66,19 +66,24 @@ function closeConfirm() {
   confirmModal.classList.add("hidden");
 }
 
-function changeWholeWebsite() {
-  document.body.classList.add("changed-site");
+function makeSiteSad() {
+  document.body.classList.add("sad-site");
 
   mainSite.innerHTML = `
-    <h1>Too late</h1>
-    <p class="subtitle">That answer has been reviewed and rejected.</p>
+    <h1>May 5 won’t be the same</h1>
+    <p class="subtitle">The wait ended early.</p>
 
-    <section class="proposal-box">
-      <h2>Nope</h2>
-      <p class="changed-message">
-        You really thought "no" was an option?<br><br>
-        No you're stuck with me.<br><br>
-        Date pending. Appeal denied. 💖
+    <section class="countdown-box">
+      <h2>The countdown stopped</h2>
+      <div id="countdown">00d 00h 00m 00s</div>
+    </section>
+
+    <section class="locked-box">
+      <h2>Some things changed</h2>
+      <p class="sad-message">
+        You chose not to wait until May 5.<br><br>
+        So the page changed with it.<br><br>
+        This was supposed to be for something sweet.
       </p>
     </section>
   `;
@@ -103,40 +108,37 @@ secretModal.addEventListener("click", (e) => {
 
 yesButton.addEventListener("mouseenter", () => {
   if (!isUnlocked) {
-    buttonHint.textContent = "Not yet. This button stays locked until May 5.";
+    buttonHint.textContent = "Locked until May 5.";
   }
 });
 
 yesButton.addEventListener("click", () => {
   if (!isUnlocked) {
-    buttonHint.textContent = "Still locked. Come back on May 5 💖";
+    buttonHint.textContent = "Still locked until May 5 💖";
     return;
   }
 
-  buttonHint.textContent = "Yay 💖";
+  buttonHint.textContent = "You can finally say yes now 💖";
 });
 
 noButton.addEventListener("mouseenter", () => {
-  if (isUnlocked) {
-    moveNoButton();
-  }
+  moveNoButton();
 });
 
 noButton.addEventListener("click", () => {
-  if (!isUnlocked) {
-    buttonHint.textContent = "You can say no early... but I hope you don’t.";
-    return;
-  }
-
   noClickCount++;
 
   if (noClickCount < 3) {
+    buttonHint.textContent = "Pressing no means ending the wait early.";
     moveNoButton();
     return;
   }
 
   confirmStage = 1;
-  openConfirm("Are you sure?", "Be honest... is that really your final answer?");
+  openConfirm(
+    "Are you sure?",
+    "Pressing no before May 5 means you want to end the wait early."
+  );
 });
 
 confirmNo.addEventListener("click", () => {
@@ -146,22 +148,22 @@ confirmNo.addEventListener("click", () => {
 confirmYes.addEventListener("click", async () => {
   if (confirmStage === 1) {
     confirmTitle.textContent = "No, you're stuck with me";
-    confirmText.textContent = "Give it a second...";
-    confirmNo.classList.add("hidden");
+    confirmText.textContent = "Waiting 3 seconds...";
     confirmYes.classList.add("hidden");
+    confirmNo.classList.add("hidden");
 
     await new Promise((resolve) => setTimeout(resolve, 3000));
 
     confirmStage = 2;
     confirmTitle.textContent = "Are you positive?";
-    confirmText.textContent = "This is your last chance to rethink that answer.";
-    confirmNo.classList.remove("hidden");
+    confirmText.textContent = "If you confirm this, the whole website changes.";
     confirmYes.classList.remove("hidden");
+    confirmNo.classList.remove("hidden");
     return;
   }
 
   if (confirmStage === 2) {
     closeConfirm();
-    changeWholeWebsite();
+    makeSiteSad();
   }
 });
