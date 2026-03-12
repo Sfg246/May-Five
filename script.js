@@ -33,7 +33,7 @@ const confirmTimer = document.getElementById("confirmTimer");
 const buttonArea = document.getElementById("buttonArea");
 const targetDate = new Date("May 5, 2026 00:00:00").getTime();
 
-const SITE_STATE_KEY = "may5_site_state_v2";
+const SITE_STATE_KEY = "may5_site_state_v3";
 
 let isUnlocked = false;
 let noInteractions = 0;
@@ -184,7 +184,7 @@ function makeSiteSad() {
   `;
 }
 
-function makeSiteHappy() {
+function makeSiteHappyEarly() {
   stopNoMovement();
   document.body.classList.remove("sad-site");
   document.body.classList.add("happy-site");
@@ -211,6 +211,80 @@ function makeSiteHappy() {
   `;
 }
 
+function makeMay5Reveal() {
+  stopNoMovement();
+  document.body.classList.remove("sad-site");
+  document.body.classList.add("happy-site");
+  brokenHearts.classList.add("hidden");
+  happyDecor.classList.remove("hidden");
+
+  mainSite.innerHTML = `
+    <h1>You made it to May 5 💖</h1>
+    <p class="subtitle">So now I get to ask you this the right way.</p>
+
+    <section class="countdown-box">
+      <h2>The wait is over</h2>
+      <div id="countdown">00d 00h 00m 00s</div>
+    </section>
+
+    <section class="locked-box">
+      <h2>Final question</h2>
+      <p class="happy-message">
+        So… will you go on a date with me?
+      </p>
+      <div class="modal-buttons">
+        <button id="finalMay5YesButton" type="button">Yes, I will</button>
+      </div>
+      <p id="finalMay5Status" class="send-status"></p>
+    </section>
+  `;
+
+  const finalMay5YesButton = document.getElementById("finalMay5YesButton");
+  const finalMay5Status = document.getElementById("finalMay5Status");
+
+  finalMay5YesButton.addEventListener("click", async () => {
+    finalMay5YesButton.disabled = true;
+    finalMay5Status.textContent = "Sending...";
+
+    const result = await sendSiteNotification("may5_yes");
+
+    if (result && result.success) {
+      saveSiteState("may5_yes");
+      makeMay5FinalYes();
+    } else {
+      finalMay5YesButton.disabled = false;
+      finalMay5Status.textContent = "Something went wrong. Please try again.";
+    }
+  });
+}
+
+function makeMay5FinalYes() {
+  stopNoMovement();
+  document.body.classList.remove("sad-site");
+  document.body.classList.add("happy-site");
+  brokenHearts.classList.add("hidden");
+  happyDecor.classList.remove("hidden");
+
+  mainSite.innerHTML = `
+    <h1>She said yes 💖</h1>
+    <p class="subtitle">No more waiting now.</p>
+
+    <section class="countdown-box">
+      <h2>Countdown complete</h2>
+      <div id="countdown">00d 00h 00m 00s</div>
+    </section>
+
+    <section class="locked-box">
+      <h2>Access granted</h2>
+      <p class="happy-message">
+        You waited.<br><br>
+        You made it to May 5.<br><br>
+        And now it’s a yes. 🌸💐💖
+      </p>
+    </section>
+  `;
+}
+
 function applyLockedEndingState() {
   makeSiteSad();
   secretModal.classList.add("hidden");
@@ -219,8 +293,16 @@ function applyLockedEndingState() {
   confirmModal.classList.add("hidden");
 }
 
-function applyLockedHappyState() {
-  makeSiteHappy();
+function applyLockedHappyEarlyState() {
+  makeSiteHappyEarly();
+  secretModal.classList.add("hidden");
+  writeSecretModal.classList.add("hidden");
+  earlyModal.classList.add("hidden");
+  confirmModal.classList.add("hidden");
+}
+
+function applyLockedMay5YesState() {
+  makeMay5FinalYes();
   secretModal.classList.add("hidden");
   writeSecretModal.classList.add("hidden");
   earlyModal.classList.add("hidden");
@@ -236,7 +318,9 @@ const savedState = getSiteState();
 if (savedState === "ended") {
   applyLockedEndingState();
 } else if (savedState === "early_yes") {
-  applyLockedHappyState();
+  applyLockedHappyEarlyState();
+} else if (savedState === "may5_yes") {
+  applyLockedMay5YesState();
 } else {
   updateCountdown();
   setInterval(updateCountdown, 1000);
@@ -245,7 +329,7 @@ if (savedState === "ended") {
 
 secretButton.addEventListener("click", () => {
   const state = getSiteState();
-  if (state === "ended" || state === "early_yes") return;
+  if (state === "ended" || state === "early_yes" || state === "may5_yes") return;
   secretModal.classList.remove("hidden");
 });
 
@@ -261,7 +345,7 @@ secretModal.addEventListener("click", (e) => {
 
 writeSecretButton.addEventListener("click", () => {
   const state = getSiteState();
-  if (state === "ended" || state === "early_yes") return;
+  if (state === "ended" || state === "early_yes" || state === "may5_yes") return;
   writeSecretModal.classList.remove("hidden");
   secretSendStatus.textContent = "";
 });
@@ -307,14 +391,14 @@ sendSecretMessageButton.addEventListener("click", async () => {
 
 yesButton.addEventListener("mouseenter", () => {
   const state = getSiteState();
-  if (!isUnlocked && state !== "ended" && state !== "early_yes") {
+  if (!isUnlocked && state !== "ended" && state !== "early_yes" && state !== "may5_yes") {
     buttonHint.textContent = "Still locked until May 5.";
   }
 });
 
 yesButton.addEventListener("click", () => {
   const state = getSiteState();
-  if (state === "ended" || state === "early_yes") return;
+  if (state === "ended" || state === "early_yes" || state === "may5_yes") return;
 
   if (!isUnlocked) {
     buttonHint.textContent = "Still locked until May 5.";
@@ -322,7 +406,7 @@ yesButton.addEventListener("click", () => {
     return;
   }
 
-  buttonHint.textContent = "You can finally say yes now 💖";
+  makeMay5Reveal();
 });
 
 closeEarlyModal.addEventListener("click", () => {
@@ -342,7 +426,7 @@ earlyYesButton.addEventListener("click", async () => {
 
   if (result && result.success) {
     saveSiteState("early_yes");
-    applyLockedHappyState();
+    applyLockedHappyEarlyState();
   } else {
     buttonHint.textContent = "Something went wrong, try again.";
   }
@@ -356,7 +440,7 @@ earlyModal.addEventListener("click", (e) => {
 
 noButton.addEventListener("click", () => {
   const state = getSiteState();
-  if (state === "ended" || state === "early_yes") return;
+  if (state === "ended" || state === "early_yes" || state === "may5_yes") return;
 
   noInteractions += 1;
 
