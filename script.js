@@ -230,7 +230,7 @@ function makeMay5Reveal() {
     <section class="locked-box">
       <h2>Final question</h2>
       <p class="happy-message">
-        So… will you go on a date with me?
+          Anaisita, will you go on a date with me?
       </p>
       <div class="modal-buttons">
         <button id="finalMay5YesButton" type="button">Yes, I will</button>
