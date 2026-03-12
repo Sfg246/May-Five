@@ -232,7 +232,39 @@ button:hover {
   font-size: 1.08rem;
 }
 
-.broken-hearts {
+.happy-site {
+  background: linear-gradient(180deg, #fff8fb 0%, #fff0f7 45%, #fff9ef 100%);
+  color: #704054;
+}
+
+.happy-site .countdown-box,
+.happy-site .locked-box {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(255, 155, 195, 0.35);
+  box-shadow: 0 12px 30px rgba(255, 126, 170, 0.15);
+}
+
+.happy-site h1,
+.happy-site h2,
+.happy-site h3,
+.happy-site p,
+.happy-site #countdown,
+.happy-site .subtitle,
+.happy-site .button-hint {
+  color: #a53f68;
+}
+
+.happy-message {
+  margin-top: 24px;
+  padding: 22px;
+  border-radius: 20px;
+  background: rgba(255, 192, 220, 0.16);
+  line-height: 1.8;
+  font-size: 1.08rem;
+}
+
+.broken-hearts,
+.happy-decor {
   position: fixed;
   inset: 0;
   overflow: hidden;
@@ -240,7 +272,8 @@ button:hover {
   z-index: 1;
 }
 
-.broken-hearts span {
+.broken-hearts span,
+.happy-decor span {
   position: absolute;
   font-size: clamp(1.8rem, 4vw, 3.4rem);
   opacity: 0.22;
@@ -260,6 +293,19 @@ button:hover {
 .broken-hearts span:nth-child(11) { left: 91%; animation-duration: 14s; animation-delay: 3s; }
 .broken-hearts span:nth-child(12) { left: 52%; animation-duration: 21s; animation-delay: 6s; }
 
+.happy-decor span:nth-child(1) { left: 5%; animation-duration: 14s; animation-delay: 0s; }
+.happy-decor span:nth-child(2) { left: 13%; animation-duration: 18s; animation-delay: 2s; }
+.happy-decor span:nth-child(3) { left: 22%; animation-duration: 16s; animation-delay: 1s; }
+.happy-decor span:nth-child(4) { left: 30%; animation-duration: 20s; animation-delay: 4s; }
+.happy-decor span:nth-child(5) { left: 39%; animation-duration: 15s; animation-delay: 3s; }
+.happy-decor span:nth-child(6) { left: 48%; animation-duration: 19s; animation-delay: 5s; }
+.happy-decor span:nth-child(7) { left: 57%; animation-duration: 13s; animation-delay: 1s; }
+.happy-decor span:nth-child(8) { left: 66%; animation-duration: 17s; animation-delay: 4s; }
+.happy-decor span:nth-child(9) { left: 75%; animation-duration: 15s; animation-delay: 2s; }
+.happy-decor span:nth-child(10) { left: 84%; animation-duration: 18s; animation-delay: 0s; }
+.happy-decor span:nth-child(11) { left: 92%; animation-duration: 14s; animation-delay: 3s; }
+.happy-decor span:nth-child(12) { left: 51%; animation-duration: 21s; animation-delay: 6s; }
+
 .message-wrap {
   margin-top: 10px;
 }
@@ -276,7 +322,6 @@ button:hover {
   background: rgba(255, 214, 226, 0.45);
 }
 
-.secret-input,
 .secret-textarea {
   width: 100%;
   box-sizing: border-box;
@@ -287,9 +332,6 @@ button:hover {
   font: inherit;
   color: #5a3946;
   background: #fffafc;
-}
-
-.secret-textarea {
   min-height: 140px;
   resize: vertical;
 }
