@@ -11,6 +11,8 @@ const closeSecretModal = document.getElementById("closeSecretModal");
 
 const earlyModal = document.getElementById("earlyModal");
 const closeEarlyModal = document.getElementById("closeEarlyModal");
+const earlyYesButton = document.getElementById("earlyYesButton");
+const earlyNoButton = document.getElementById("earlyNoButton");
 
 const confirmModal = document.getElementById("confirmModal");
 const confirmTitle = document.getElementById("confirmTitle");
@@ -25,7 +27,7 @@ const targetDate = new Date("May 5, 2026 00:00:00").getTime();
 let isUnlocked = false;
 let noInteractions = 0;
 let confirmStage = 0;
-let countdownInterval = null;
+let confirmCountdownInterval = null;
 let noMoveInterval = null;
 
 confirmModal.classList.add("hidden");
@@ -53,24 +55,20 @@ function updateCountdown() {
 }
 
 function moveNoButton() {
-  if (confirmStage > 0) return;
-  if (!noButton || !buttonArea) return;
+  if (!buttonArea || !noButton) return;
+  if (!confirmModal.classList.contains("hidden")) return;
+  if (document.body.classList.contains("sad-site")) return;
 
   const areaWidth = buttonArea.offsetWidth;
   const areaHeight = buttonArea.offsetHeight;
   const buttonWidth = noButton.offsetWidth;
   const buttonHeight = noButton.offsetHeight;
 
-  const maxX = Math.max(areaWidth - buttonWidth - 4, 0);
+  const maxX = Math.max(areaWidth - buttonWidth - 8, 0);
   const maxY = Math.max(areaHeight - buttonHeight, 0);
 
-  const currentLeft = parseInt(noButton.style.left || 0, 10);
   let randomX = Math.floor(Math.random() * (maxX + 1));
   let randomY = Math.floor(Math.random() * (maxY + 1));
-
-  if (Math.abs(randomX - currentLeft) < 38) {
-    randomX = Math.min(maxX, randomX + 46);
-  }
 
   noButton.style.left = `${randomX}px`;
   noButton.style.top = `${randomY}px`;
@@ -80,6 +78,8 @@ function startNoMovement() {
   if (noMoveInterval) {
     clearInterval(noMoveInterval);
   }
+
+  moveNoButton();
 
   noMoveInterval = setInterval(() => {
     moveNoButton();
@@ -98,39 +98,34 @@ function openConfirm(title, text) {
   confirmText.textContent = text;
   confirmTimer.classList.add("hidden");
   confirmModal.classList.remove("hidden");
-  stopNoMovement();
 }
 
 function closeConfirm() {
   confirmModal.classList.add("hidden");
   confirmTimer.classList.add("hidden");
 
-  if (countdownInterval) {
-    clearInterval(countdownInterval);
-    countdownInterval = null;
-  }
-
-  if (!document.body.classList.contains("sad-site")) {
-    startNoMovement();
+  if (confirmCountdownInterval) {
+    clearInterval(confirmCountdownInterval);
+    confirmCountdownInterval = null;
   }
 }
 
 function startThirtySecondTimer() {
-  if (countdownInterval) {
-    clearInterval(countdownInterval);
+  if (confirmCountdownInterval) {
+    clearInterval(confirmCountdownInterval);
   }
 
   let timeLeft = 30;
   confirmTimer.textContent = timeLeft;
   confirmTimer.classList.remove("hidden");
 
-  countdownInterval = setInterval(() => {
+  confirmCountdownInterval = setInterval(() => {
     timeLeft -= 1;
     confirmTimer.textContent = timeLeft;
 
     if (timeLeft <= 0) {
-      clearInterval(countdownInterval);
-      countdownInterval = null;
+      clearInterval(confirmCountdownInterval);
+      confirmCountdownInterval = null;
 
       confirmStage = 2;
       confirmTitle.textContent = "Are you positive?";
@@ -206,6 +201,16 @@ closeEarlyModal.addEventListener("click", () => {
   earlyModal.classList.add("hidden");
 });
 
+earlyNoButton.addEventListener("click", () => {
+  earlyModal.classList.add("hidden");
+});
+
+earlyYesButton.addEventListener("click", async () => {
+  await sendSiteNotification("early_yes");
+  earlyModal.classList.add("hidden");
+  buttonHint.textContent = "Message received 💖";
+});
+
 earlyModal.addEventListener("click", (e) => {
   if (e.target === earlyModal) {
     earlyModal.classList.add("hidden");
@@ -215,17 +220,17 @@ earlyModal.addEventListener("click", (e) => {
 noButton.addEventListener("click", () => {
   noInteractions += 1;
 
-  if (noInteractions <= 2) {
+  if (noInteractions === 1) {
     buttonHint.textContent = "This is my way of fighting for this.";
     return;
   }
 
-  if (noInteractions === 3) {
+  if (noInteractions === 2) {
     buttonHint.textContent = "Nooo, I’ll fight harder.";
     return;
   }
 
-  if (noInteractions === 4) {
+  if (noInteractions === 3) {
     buttonHint.textContent = "Wait... you really wanna press no?";
     return;
   }
@@ -238,11 +243,10 @@ noButton.addEventListener("click", () => {
 });
 
 confirmNo.addEventListener("click", () => {
-  confirmStage = 0;
   closeConfirm();
 });
 
-confirmYes.addEventListener("click", () => {
+confirmYes.addEventListener("click", async () => {
   if (confirmStage === 1) {
     confirmTitle.textContent = "No, you're stuck with me";
     confirmText.textContent = "Just think carefully.";
@@ -253,6 +257,7 @@ confirmYes.addEventListener("click", () => {
   }
 
   if (confirmStage === 2) {
+    await sendSiteNotification("cancel");
     closeConfirm();
     makeSiteSad();
   }
