@@ -4,9 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Countdown to May 5</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Counting down to May 5</h1>
-  <p>Something special unlocks soon.</p>
+  <main class="container">
+    <h1>Counting down to May 5</h1>
+    <p class="subtitle">Something special unlocks soon.</p>
+
+    <section class="countdown-box">
+      <h2>Time left</h2>
+      <div id="countdown">Loading countdown...</div>
+    </section>
+
+    <section class="locked-box">
+      <h2>Reserved for May 5</h2>
+      <p>This stays locked until the countdown ends.</p>
+      <button id="lockedButton" disabled>🔒 Locked until May 5</button>
+    </section>
+
+    <section id="proposalBox" class="proposal-box hidden">
+      <h2>Now it’s time</h2>
+      <p>Will you go on a date with me?</p>
+      <div class="button-row">
+        <button id="yesButton">Yes</button>
+        <button id="noButton">No</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
