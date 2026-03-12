@@ -14,6 +14,7 @@ body {
   padding: 20px;
   text-align: center;
   position: relative;
+  z-index: 2;
 }
 
 h1 {
@@ -131,24 +132,6 @@ button:hover {
   background: rgba(255, 214, 226, 0.45);
 }
 
-.early-wrap {
-  margin-top: 10px;
-}
-
-.early-btn {
-  background: transparent;
-  border: none;
-  color: #b78a99;
-  font-size: 0.78rem;
-  padding: 6px 10px;
-  opacity: 0.75;
-}
-
-.early-btn:hover {
-  opacity: 1;
-  background: transparent;
-}
-
 .modal {
   position: fixed;
   inset: 0;
@@ -165,7 +148,7 @@ button:hover {
 }
 
 .modal-card {
-  width: min(440px, 92vw);
+  width: min(460px, 92vw);
   background: white;
   border-radius: 22px;
   padding: 28px 24px;
@@ -192,6 +175,21 @@ button:hover {
   flex-wrap: wrap;
 }
 
+.confirm-timer {
+  width: 68px;
+  height: 68px;
+  margin: 16px auto 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff1f6;
+  color: #c63c68;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border: 2px solid rgba(198, 60, 104, 0.18);
+}
+
 .close-btn {
   position: absolute;
   top: 10px;
@@ -204,13 +202,13 @@ button:hover {
 }
 
 .sad-site {
-  background: linear-gradient(180deg, #2d2d35 0%, #17171d 100%);
-  color: #e6e6ee;
+  background: linear-gradient(180deg, #141418 0%, #09090c 100%);
+  color: #d9d9e6;
 }
 
 .sad-site .countdown-box,
 .sad-site .locked-box {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.08);
   box-shadow: none;
 }
@@ -222,14 +220,51 @@ button:hover {
 .sad-site #countdown,
 .sad-site .subtitle,
 .sad-site .button-hint {
-  color: #e6e6ee;
+  color: #ececf4;
 }
 
 .sad-message {
   margin-top: 24px;
   padding: 22px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.05);
   line-height: 1.8;
   font-size: 1.08rem;
+}
+
+.broken-hearts {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.broken-hearts span {
+  position: absolute;
+  font-size: clamp(1.8rem, 4vw, 3.4rem);
+  opacity: 0.22;
+  animation: floatDown linear infinite;
+}
+
+.broken-hearts span:nth-child(1) { left: 6%; animation-duration: 14s; animation-delay: 0s; }
+.broken-hearts span:nth-child(2) { left: 14%; animation-duration: 18s; animation-delay: 2s; }
+.broken-hearts span:nth-child(3) { left: 23%; animation-duration: 16s; animation-delay: 1s; }
+.broken-hearts span:nth-child(4) { left: 31%; animation-duration: 20s; animation-delay: 4s; }
+.broken-hearts span:nth-child(5) { left: 40%; animation-duration: 15s; animation-delay: 3s; }
+.broken-hearts span:nth-child(6) { left: 49%; animation-duration: 19s; animation-delay: 5s; }
+.broken-hearts span:nth-child(7) { left: 58%; animation-duration: 13s; animation-delay: 1s; }
+.broken-hearts span:nth-child(8) { left: 67%; animation-duration: 17s; animation-delay: 4s; }
+.broken-hearts span:nth-child(9) { left: 76%; animation-duration: 15s; animation-delay: 2s; }
+.broken-hearts span:nth-child(10) { left: 84%; animation-duration: 18s; animation-delay: 0s; }
+.broken-hearts span:nth-child(11) { left: 91%; animation-duration: 14s; animation-delay: 3s; }
+.broken-hearts span:nth-child(12) { left: 52%; animation-duration: 21s; animation-delay: 6s; }
+
+@keyframes floatDown {
+  from {
+    transform: translateY(-12vh) rotate(0deg);
+  }
+  to {
+    transform: translateY(112vh) rotate(18deg);
+  }
 }
