@@ -1,11 +1,13 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(180deg, #fff1f1 0%, #ffd6d6 100%);
+  background: linear-gradient(-45deg, #fff1f1, #ffd6d6, #d94b4b, #7f1d1d);
+  background-size: 400% 400%;
+  animation: redFlow 12s ease infinite;
   color: #3f0d0d;
   overflow-x: hidden;
   min-height: 100vh;
-  transition: background 0.5s ease, color 0.5s ease;
+  transition: color 0.5s ease;
 }
 
 .container {
@@ -373,7 +375,23 @@ button:hover {
 #finalMay5YesButton:hover {
   background: #991b1b;
 }
-
+@keyframes redFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 50% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  75% {
+    background-position: 50% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 @keyframes floatDown {
   from {
     transform: translateY(-12vh) rotate(0deg);
