@@ -4,6 +4,7 @@ const noButton = document.getElementById("noButton");
 const buttonHint = document.getElementById("buttonHint");
 const mainSite = document.getElementById("mainSite");
 const brokenHearts = document.getElementById("brokenHearts");
+const happyDecor = document.getElementById("happyDecor");
 
 const secretButton = document.getElementById("secretButton");
 const secretModal = document.getElementById("secretModal");
@@ -32,7 +33,7 @@ const confirmTimer = document.getElementById("confirmTimer");
 const buttonArea = document.getElementById("buttonArea");
 const targetDate = new Date("May 5, 2026 00:00:00").getTime();
 
-const SITE_STATE_KEY = "may5_site_state_v1";
+const SITE_STATE_KEY = "may5_site_state_v2";
 
 let isUnlocked = false;
 let noInteractions = 0;
@@ -44,6 +45,7 @@ confirmModal.classList.add("hidden");
 writeSecretModal.classList.add("hidden");
 earlyModal.classList.add("hidden");
 brokenHearts.classList.add("hidden");
+happyDecor.classList.add("hidden");
 
 function saveSiteState(state) {
   localStorage.setItem(SITE_STATE_KEY, state);
@@ -76,6 +78,7 @@ function moveNoButton() {
   if (!buttonArea || !noButton) return;
   if (!confirmModal.classList.contains("hidden")) return;
   if (document.body.classList.contains("sad-site")) return;
+  if (document.body.classList.contains("happy-site")) return;
 
   const areaWidth = buttonArea.offsetWidth;
   const areaHeight = buttonArea.offsetHeight;
@@ -155,7 +158,9 @@ function startThirtySecondTimer() {
 
 function makeSiteSad() {
   stopNoMovement();
+  document.body.classList.remove("happy-site");
   document.body.classList.add("sad-site");
+  happyDecor.classList.add("hidden");
   brokenHearts.classList.remove("hidden");
 
   mainSite.innerHTML = `
@@ -179,8 +184,43 @@ function makeSiteSad() {
   `;
 }
 
+function makeSiteHappy() {
+  stopNoMovement();
+  document.body.classList.remove("sad-site");
+  document.body.classList.add("happy-site");
+  brokenHearts.classList.add("hidden");
+  happyDecor.classList.remove("hidden");
+
+  mainSite.innerHTML = `
+    <h1>You didn’t want to wait 💖</h1>
+    <p class="subtitle">So the countdown changed with that choice.</p>
+
+    <section class="countdown-box">
+      <h2>No more waiting</h2>
+      <div id="countdown">00d 00h 00m 00s</div>
+    </section>
+
+    <section class="locked-box">
+      <h2>Message received</h2>
+      <p class="happy-message">
+        Anaisita said she does not want to wait until May 5 anymore.<br><br>
+        She knows what she wants.<br><br>
+        So this page gets to be happy now. 💐💖
+      </p>
+    </section>
+  `;
+}
+
 function applyLockedEndingState() {
   makeSiteSad();
+  secretModal.classList.add("hidden");
+  writeSecretModal.classList.add("hidden");
+  earlyModal.classList.add("hidden");
+  confirmModal.classList.add("hidden");
+}
+
+function applyLockedHappyState() {
+  makeSiteHappy();
   secretModal.classList.add("hidden");
   writeSecretModal.classList.add("hidden");
   earlyModal.classList.add("hidden");
@@ -195,6 +235,8 @@ function closeWriteSecretModalBox() {
 const savedState = getSiteState();
 if (savedState === "ended") {
   applyLockedEndingState();
+} else if (savedState === "early_yes") {
+  applyLockedHappyState();
 } else {
   updateCountdown();
   setInterval(updateCountdown, 1000);
@@ -202,7 +244,8 @@ if (savedState === "ended") {
 }
 
 secretButton.addEventListener("click", () => {
-  if (getSiteState() === "ended") return;
+  const state = getSiteState();
+  if (state === "ended" || state === "early_yes") return;
   secretModal.classList.remove("hidden");
 });
 
@@ -217,7 +260,8 @@ secretModal.addEventListener("click", (e) => {
 });
 
 writeSecretButton.addEventListener("click", () => {
-  if (getSiteState() === "ended") return;
+  const state = getSiteState();
+  if (state === "ended" || state === "early_yes") return;
   writeSecretModal.classList.remove("hidden");
   secretSendStatus.textContent = "";
 });
@@ -262,13 +306,15 @@ sendSecretMessageButton.addEventListener("click", async () => {
 });
 
 yesButton.addEventListener("mouseenter", () => {
-  if (!isUnlocked && getSiteState() !== "ended") {
+  const state = getSiteState();
+  if (!isUnlocked && state !== "ended" && state !== "early_yes") {
     buttonHint.textContent = "Still locked until May 5.";
   }
 });
 
 yesButton.addEventListener("click", () => {
-  if (getSiteState() === "ended") return;
+  const state = getSiteState();
+  if (state === "ended" || state === "early_yes") return;
 
   if (!isUnlocked) {
     buttonHint.textContent = "Still locked until May 5.";
@@ -288,11 +334,15 @@ earlyNoButton.addEventListener("click", () => {
 });
 
 earlyYesButton.addEventListener("click", async () => {
+  const shouldConfirm = window.confirm("Are you sure you want to start this early?");
+  if (!shouldConfirm) return;
+
   const result = await sendSiteNotification("early_yes");
   earlyModal.classList.add("hidden");
 
   if (result && result.success) {
-    buttonHint.textContent = "Message received 💖";
+    saveSiteState("early_yes");
+    applyLockedHappyState();
   } else {
     buttonHint.textContent = "Something went wrong, try again.";
   }
@@ -305,7 +355,8 @@ earlyModal.addEventListener("click", (e) => {
 });
 
 noButton.addEventListener("click", () => {
-  if (getSiteState() === "ended") return;
+  const state = getSiteState();
+  if (state === "ended" || state === "early_yes") return;
 
   noInteractions += 1;
 
