@@ -29,8 +29,7 @@ h1 {
 }
 
 .countdown-box,
-.locked-box,
-.proposal-box {
+.locked-box {
   background: rgba(255, 255, 255, 0.9);
   border: 2px solid rgba(255, 182, 193, 0.35);
   border-radius: 24px;
@@ -42,8 +41,7 @@ h1 {
 }
 
 .countdown-box h2,
-.locked-box h2,
-.proposal-box h2 {
+.locked-box h2 {
   margin-top: 0;
   color: #c63c68;
   font-size: 2rem;
@@ -56,8 +54,7 @@ h1 {
   color: #8b3a57;
 }
 
-.locked-box p,
-.proposal-box p {
+.locked-box p {
   font-size: 1.1rem;
   color: #6d4a57;
 }
@@ -134,10 +131,6 @@ button:hover {
   background: rgba(255, 214, 226, 0.45);
 }
 
-.hidden {
-  display: none !important;
-}
-
 .modal {
   position: fixed;
   inset: 0;
@@ -147,6 +140,10 @@ button:hover {
   justify-content: center;
   padding: 20px;
   z-index: 999;
+}
+
+.hidden {
+  display: none !important;
 }
 
 .modal-card {
@@ -194,8 +191,7 @@ button:hover {
 }
 
 .sad-site .countdown-box,
-.sad-site .locked-box,
-.sad-site .proposal-box {
+.sad-site .locked-box {
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.08);
   box-shadow: none;
