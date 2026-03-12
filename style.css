@@ -1,8 +1,9 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #fff7fb;
-  color: #333;
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(180deg, #fff7fb 0%, #ffeef5 100%);
+  color: #4b2e39;
+  overflow-x: hidden;
 }
 
 .container {
@@ -13,49 +14,91 @@ body {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
   margin-bottom: 10px;
+  color: #d14d72;
 }
 
 .subtitle {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   margin-bottom: 30px;
+  color: #7a4e5d;
 }
 
 .countdown-box,
 .locked-box,
 .proposal-box {
-  background: white;
-  border-radius: 20px;
-  padding: 25px;
-  margin-bottom: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.85);
+  border: 2px solid rgba(255, 182, 193, 0.35);
+  border-radius: 24px;
+  padding: 30px 25px;
+  margin-bottom: 24px;
+  box-shadow: 0 12px 30px rgba(209, 77, 114, 0.12);
+  backdrop-filter: blur(6px);
+}
+
+.countdown-box h2,
+.locked-box h2,
+.proposal-box h2 {
+  margin-top: 0;
+  color: #c63c68;
+  font-size: 2rem;
 }
 
 #countdown {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
   margin-top: 10px;
+  color: #8b3a57;
+}
+
+.locked-box p,
+.proposal-box p {
+  font-size: 1.1rem;
+  color: #6d4a57;
 }
 
 button {
-  padding: 12px 22px;
+  padding: 14px 24px;
   font-size: 1rem;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
 }
 
 button:disabled {
   cursor: not-allowed;
-  opacity: 0.7;
+  opacity: 0.75;
+  background: #f4dce4;
+  color: #9a7d88;
+}
+
+#yesButton {
+  background: #ff6b9a;
+  color: white;
+  box-shadow: 0 8px 18px rgba(255, 107, 154, 0.25);
+}
+
+#yesButton:hover {
+  background: #ff4f87;
+}
+
+#noButton {
+  background: #ffd6e2;
+  color: #8b3a57;
 }
 
 .button-row {
   display: flex;
   justify-content: center;
-  gap: 12px;
-  margin-top: 15px;
+  gap: 14px;
+  margin-top: 20px;
+  flex-wrap: wrap;
 }
 
 .hidden {
