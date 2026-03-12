@@ -1,8 +1,8 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(180deg, #fff7fb 0%, #ffeef5 100%);
-  color: #4b2e39;
+  background: linear-gradient(180deg, #fff5f5 0%, #ffe3e3 100%);
+  color: #4a1515;
   overflow-x: hidden;
   min-height: 100vh;
   transition: background 0.5s ease, color 0.5s ease;
@@ -20,23 +20,30 @@ body {
 h1 {
   font-size: 3rem;
   margin-bottom: 10px;
-  color: #d14d72;
+  color: #b91c1c;
 }
 
 .subtitle {
   font-size: 1.15rem;
+  margin-bottom: 10px;
+  color: #7f1d1d;
+}
+
+.favorite-color-note {
+  font-size: 1rem;
   margin-bottom: 30px;
-  color: #7a4e5d;
+  color: #991b1b;
+  line-height: 1.6;
 }
 
 .countdown-box,
 .locked-box {
-  background: rgba(255, 255, 255, 0.9);
-  border: 2px solid rgba(255, 182, 193, 0.35);
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid rgba(220, 38, 38, 0.18);
   border-radius: 24px;
   padding: 30px 25px;
   margin-bottom: 24px;
-  box-shadow: 0 12px 30px rgba(209, 77, 114, 0.12);
+  box-shadow: 0 12px 30px rgba(185, 28, 28, 0.12);
   backdrop-filter: blur(6px);
   transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
 }
@@ -44,7 +51,7 @@ h1 {
 .countdown-box h2,
 .locked-box h2 {
   margin-top: 0;
-  color: #c63c68;
+  color: #b91c1c;
   font-size: 2rem;
 }
 
@@ -52,12 +59,12 @@ h1 {
   font-size: 2rem;
   font-weight: bold;
   margin-top: 10px;
-  color: #8b3a57;
+  color: #991b1b;
 }
 
 .locked-box p {
   font-size: 1.1rem;
-  color: #6d4a57;
+  color: #7f1d1d;
 }
 
 button {
@@ -76,15 +83,15 @@ button:hover {
 #yesButton,
 #confirmYes,
 #confirmNo {
-  background: #ff6b9a;
+  background: #dc2626;
   color: white;
-  box-shadow: 0 8px 18px rgba(255, 107, 154, 0.25);
+  box-shadow: 0 8px 18px rgba(220, 38, 38, 0.25);
 }
 
 #yesButton:hover,
 #confirmYes:hover,
 #confirmNo:hover {
-  background: #ff4f87;
+  background: #b91c1c;
 }
 
 #yesButton {
@@ -94,9 +101,9 @@ button:hover {
 }
 
 #noButton {
-  background: #ffd6e2;
-  color: #8b3a57;
-  box-shadow: 0 8px 18px rgba(255, 107, 154, 0.12);
+  background: #fee2e2;
+  color: #991b1b;
+  box-shadow: 0 8px 18px rgba(220, 38, 38, 0.12);
   position: absolute;
   left: calc(50% + 12px);
   top: 0;
@@ -112,7 +119,7 @@ button:hover {
 .button-hint {
   margin-top: 12px;
   font-size: 0.98rem;
-  color: #9a6a79;
+  color: #991b1b;
   min-height: 24px;
 }
 
@@ -122,20 +129,20 @@ button:hover {
 
 .secret-btn {
   background: transparent;
-  border: 1px dashed #d9a8b8;
-  color: #9a6a79;
+  border: 1px dashed #ef4444;
+  color: #991b1b;
   font-size: 0.92rem;
   padding: 10px 18px;
 }
 
 .secret-btn:hover {
-  background: rgba(255, 214, 226, 0.45);
+  background: rgba(254, 226, 226, 0.55);
 }
 
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(50, 25, 35, 0.35);
+  background: rgba(60, 10, 10, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -159,11 +166,11 @@ button:hover {
 
 .modal-card h3 {
   margin-top: 0;
-  color: #c63c68;
+  color: #b91c1c;
 }
 
 .modal-card p {
-  color: #6d4a57;
+  color: #7f1d1d;
   line-height: 1.6;
 }
 
@@ -183,11 +190,11 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff1f6;
-  color: #c63c68;
+  background: #fef2f2;
+  color: #b91c1c;
   font-size: 1.4rem;
   font-weight: bold;
-  border: 2px solid rgba(198, 60, 104, 0.18);
+  border: 2px solid rgba(185, 28, 28, 0.18);
 }
 
 .close-btn {
@@ -195,7 +202,7 @@ button:hover {
   top: 10px;
   right: 12px;
   background: transparent;
-  color: #a56879;
+  color: #991b1b;
   font-size: 1.5rem;
   padding: 4px 10px;
   box-shadow: none;
@@ -219,7 +226,8 @@ button:hover {
 .sad-site p,
 .sad-site #countdown,
 .sad-site .subtitle,
-.sad-site .button-hint {
+.sad-site .button-hint,
+.sad-site .favorite-color-note {
   color: #ececf4;
 }
 
@@ -250,7 +258,8 @@ button:hover {
 .happy-site p,
 .happy-site #countdown,
 .happy-site .subtitle,
-.happy-site .button-hint {
+.happy-site .button-hint,
+.happy-site .favorite-color-note {
   color: #a53f68;
 }
 
@@ -312,26 +321,26 @@ button:hover {
 
 .message-btn {
   background: transparent;
-  border: 1px solid #e4b5c4;
-  color: #a06b7d;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
   font-size: 0.9rem;
   padding: 10px 18px;
 }
 
 .message-btn:hover {
-  background: rgba(255, 214, 226, 0.45);
+  background: rgba(254, 226, 226, 0.55);
 }
 
 .secret-textarea {
   width: 100%;
   box-sizing: border-box;
   margin-top: 12px;
-  border: 1px solid #ead1da;
+  border: 1px solid #fecaca;
   border-radius: 14px;
   padding: 12px 14px;
   font: inherit;
-  color: #5a3946;
-  background: #fffafc;
+  color: #7f1d1d;
+  background: #fffafa;
   min-height: 140px;
   resize: vertical;
 }
@@ -344,23 +353,25 @@ button:hover {
   min-height: 22px;
   margin-top: 14px;
   font-size: 0.95rem;
-  color: #9a6a79;
+  color: #991b1b;
 }
 
 #sendSecretMessageButton,
 #cancelSecretMessageButton,
 #earlyYesButton,
-#earlyNoButton {
-  background: #ff6b9a;
+#earlyNoButton,
+#finalMay5YesButton {
+  background: #dc2626;
   color: white;
-  box-shadow: 0 8px 18px rgba(255, 107, 154, 0.25);
+  box-shadow: 0 8px 18px rgba(220, 38, 38, 0.25);
 }
 
 #sendSecretMessageButton:hover,
 #cancelSecretMessageButton:hover,
 #earlyYesButton:hover,
-#earlyNoButton:hover {
-  background: #ff4f87;
+#earlyNoButton:hover,
+#finalMay5YesButton:hover {
+  background: #b91c1c;
 }
 
 @keyframes floatDown {
