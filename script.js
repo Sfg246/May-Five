@@ -34,6 +34,7 @@ const buttonArea = document.getElementById("buttonArea");
 const targetDate = new Date("May 5, 2026 00:00:00").getTime();
 
 const SITE_STATE_KEY = "may5_site_state_v3";
+const RESET_USED_KEY = "may5_reset_used_v1";
 
 let isUnlocked = false;
 let noInteractions = 0;
@@ -53,6 +54,18 @@ function saveSiteState(state) {
 
 function getSiteState() {
   return localStorage.getItem(SITE_STATE_KEY);
+}
+
+function hasUsedReset() {
+  return localStorage.getItem(RESET_USED_KEY) === "true";
+}
+
+function markResetUsed() {
+  localStorage.setItem(RESET_USED_KEY, "true");
+}
+
+function clearSiteState() {
+  localStorage.removeItem(SITE_STATE_KEY);
 }
 
 function updateCountdown() {
@@ -163,6 +176,14 @@ function makeSiteSad() {
   happyDecor.classList.add("hidden");
   brokenHearts.classList.remove("hidden");
 
+  const resetButtonHtml = hasUsedReset()
+    ? ""
+    : `
+      <div style="margin-top: 18px;">
+        <button id="oneTimeResetButton" type="button">Reset this once</button>
+      </div>
+    `;
+
   mainSite.innerHTML = `
     <h1>Everything changed</h1>
     <p class="subtitle">The break did not just pause. It ended for good.</p>
@@ -180,8 +201,18 @@ function makeSiteSad() {
         Completely.<br><br>
         So this page changed with that choice.
       </p>
+      ${resetButtonHtml}
     </section>
   `;
+
+  const oneTimeResetButton = document.getElementById("oneTimeResetButton");
+  if (oneTimeResetButton) {
+    oneTimeResetButton.addEventListener("click", () => {
+      markResetUsed();
+      clearSiteState();
+      location.reload();
+    });
+  }
 }
 
 function makeSiteHappyEarly() {
@@ -230,7 +261,7 @@ function makeMay5Reveal() {
     <section class="locked-box">
       <h2>Final question</h2>
       <p class="happy-message">
-          Anaisita, will you go on a date with me?
+        Anaisita, will you go on a date with me?
       </p>
       <div class="modal-buttons">
         <button id="finalMay5YesButton" type="button">Yes, I will</button>
