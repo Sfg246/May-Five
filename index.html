@@ -7,6 +7,21 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="broken-hearts hidden" id="brokenHearts" aria-hidden="true">
+    <span>💔</span>
+    <span>🥀</span>
+    <span>💔</span>
+    <span>🖤</span>
+    <span>💔</span>
+    <span>🥀</span>
+    <span>💔</span>
+    <span>🖤</span>
+    <span>💔</span>
+    <span>🥀</span>
+    <span>💔</span>
+    <span>🖤</span>
+  </div>
+
   <main class="container" id="mainSite">
     <h1>Counting down to May 5</h1>
     <p class="subtitle">Something special unlocks soon.</p>
@@ -34,12 +49,6 @@
           Open hidden message
         </button>
       </div>
-
-      <div class="early-wrap">
-        <button id="earlyButton" class="early-btn" type="button">
-          changed your mind?
-        </button>
-      </div>
     </section>
   </main>
 
@@ -58,7 +67,7 @@
       <button id="closeEarlyModal" class="close-btn" type="button">×</button>
       <h3>If you already know</h3>
       <p id="earlyMessage">
-        If you don’t want to wait until May 5, and you already know you want this, then text me.
+        If you changed your mind and you already know what you want, text me. You do not have to wait for May 5.
       </p>
     </div>
   </div>
@@ -67,6 +76,7 @@
     <div class="modal-card">
       <h3 id="confirmTitle">Are you sure?</h3>
       <p id="confirmText">Think carefully before you answer.</p>
+      <div id="confirmTimer" class="confirm-timer hidden">30</div>
       <div class="modal-buttons">
         <button id="confirmYes" type="button">Yes</button>
         <button id="confirmNo" type="button">Wait no</button>
