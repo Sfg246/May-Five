@@ -9,6 +9,15 @@ const secretButton = document.getElementById("secretButton");
 const secretModal = document.getElementById("secretModal");
 const closeSecretModal = document.getElementById("closeSecretModal");
 
+const writeSecretButton = document.getElementById("writeSecretButton");
+const writeSecretModal = document.getElementById("writeSecretModal");
+const closeWriteSecretModal = document.getElementById("closeWriteSecretModal");
+const cancelSecretMessageButton = document.getElementById("cancelSecretMessageButton");
+const sendSecretMessageButton = document.getElementById("sendSecretMessageButton");
+const secretSenderName = document.getElementById("secretSenderName");
+const secretMessageInput = document.getElementById("secretMessageInput");
+const secretSendStatus = document.getElementById("secretSendStatus");
+
 const earlyModal = document.getElementById("earlyModal");
 const closeEarlyModal = document.getElementById("closeEarlyModal");
 const earlyYesButton = document.getElementById("earlyYesButton");
@@ -32,6 +41,7 @@ let noMoveInterval = null;
 
 confirmModal.classList.add("hidden");
 secretModal.classList.add("hidden");
+writeSecretModal.classList.add("hidden");
 earlyModal.classList.add("hidden");
 brokenHearts.classList.add("hidden");
 
@@ -163,6 +173,11 @@ function makeSiteSad() {
   `;
 }
 
+function closeWriteSecretModal() {
+  writeSecretModal.classList.add("hidden");
+  secretSendStatus.textContent = "";
+}
+
 updateCountdown();
 setInterval(updateCountdown, 1000);
 startNoMovement();
@@ -179,6 +194,53 @@ secretModal.addEventListener("click", (e) => {
   if (e.target === secretModal) {
     secretModal.classList.add("hidden");
   }
+});
+
+writeSecretButton.addEventListener("click", () => {
+  writeSecretModal.classList.remove("hidden");
+  secretSendStatus.textContent = "";
+});
+
+closeWriteSecretModal.addEventListener("click", () => {
+  closeWriteSecretModal();
+});
+
+cancelSecretMessageButton.addEventListener("click", () => {
+  closeWriteSecretModal();
+});
+
+writeSecretModal.addEventListener("click", (e) => {
+  if (e.target === writeSecretModal) {
+    closeWriteSecretModal();
+  }
+});
+
+sendSecretMessageButton.addEventListener("click", async () => {
+  const rawMessage = secretMessageInput.value.trim();
+  const rawName = secretSenderName.value.trim();
+
+  if (!rawMessage) {
+    secretSendStatus.textContent = "Please write a message first.";
+    return;
+  }
+
+  sendSecretMessageButton.disabled = true;
+  secretSendStatus.textContent = "Sending...";
+
+  const result = await sendSiteNotification("secret_message", {
+    sender_name: rawName || "Anonymous",
+    secret_message: rawMessage
+  });
+
+  if (result && result.success) {
+    secretSendStatus.textContent = "Your secret message was sent.";
+    secretMessageInput.value = "";
+    secretSenderName.value = "";
+  } else {
+    secretSendStatus.textContent = "Something went wrong. Please try again.";
+  }
+
+  sendSecretMessageButton.disabled = false;
 });
 
 yesButton.addEventListener("mouseenter", () => {
