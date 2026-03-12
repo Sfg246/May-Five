@@ -11,7 +11,7 @@ const closeSecretModal = document.getElementById("closeSecretModal");
 
 const writeSecretButton = document.getElementById("writeSecretButton");
 const writeSecretModal = document.getElementById("writeSecretModal");
-const closeWriteSecretModal = document.getElementById("closeWriteSecretModal");
+const closeWriteSecretModalButton = document.getElementById("closeWriteSecretModal");
 const cancelSecretMessageButton = document.getElementById("cancelSecretMessageButton");
 const sendSecretMessageButton = document.getElementById("sendSecretMessageButton");
 const secretSenderName = document.getElementById("secretSenderName");
@@ -77,8 +77,8 @@ function moveNoButton() {
   const maxX = Math.max(areaWidth - buttonWidth - 8, 0);
   const maxY = Math.max(areaHeight - buttonHeight, 0);
 
-  let randomX = Math.floor(Math.random() * (maxX + 1));
-  let randomY = Math.floor(Math.random() * (maxY + 1));
+  const randomX = Math.floor(Math.random() * (maxX + 1));
+  const randomY = Math.floor(Math.random() * (maxY + 1));
 
   noButton.style.left = `${randomX}px`;
   noButton.style.top = `${randomY}px`;
@@ -88,8 +88,6 @@ function startNoMovement() {
   if (noMoveInterval) {
     clearInterval(noMoveInterval);
   }
-
-  moveNoButton();
 
   noMoveInterval = setInterval(() => {
     moveNoButton();
@@ -173,7 +171,7 @@ function makeSiteSad() {
   `;
 }
 
-function closeWriteSecretModal() {
+function closeWriteSecretModalBox() {
   writeSecretModal.classList.add("hidden");
   secretSendStatus.textContent = "";
 }
@@ -201,17 +199,17 @@ writeSecretButton.addEventListener("click", () => {
   secretSendStatus.textContent = "";
 });
 
-closeWriteSecretModal.addEventListener("click", () => {
-  closeWriteSecretModal();
+closeWriteSecretModalButton.addEventListener("click", () => {
+  closeWriteSecretModalBox();
 });
 
 cancelSecretMessageButton.addEventListener("click", () => {
-  closeWriteSecretModal();
+  closeWriteSecretModalBox();
 });
 
 writeSecretModal.addEventListener("click", (e) => {
   if (e.target === writeSecretModal) {
-    closeWriteSecretModal();
+    closeWriteSecretModalBox();
   }
 });
 
@@ -268,9 +266,14 @@ earlyNoButton.addEventListener("click", () => {
 });
 
 earlyYesButton.addEventListener("click", async () => {
-  await sendSiteNotification("early_yes");
+  const result = await sendSiteNotification("early_yes");
   earlyModal.classList.add("hidden");
-  buttonHint.textContent = "Message received 💖";
+
+  if (result && result.success) {
+    buttonHint.textContent = "Message received 💖";
+  } else {
+    buttonHint.textContent = "Something went wrong, try again.";
+  }
 });
 
 earlyModal.addEventListener("click", (e) => {
