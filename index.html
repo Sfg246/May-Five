@@ -49,6 +49,12 @@
           Open hidden message
         </button>
       </div>
+
+      <div class="message-wrap">
+        <button id="writeSecretButton" class="message-btn" type="button">
+          Leave a secret message
+        </button>
+      </div>
     </section>
   </main>
 
@@ -59,6 +65,38 @@
       <p id="secretMessage">
         Put your personal message here. This can be sweet, honest, and fully from you.
       </p>
+    </div>
+  </div>
+
+  <div id="writeSecretModal" class="modal hidden">
+    <div class="modal-card">
+      <button id="closeWriteSecretModal" class="close-btn" type="button">×</button>
+      <h3>Leave a secret message</h3>
+      <p class="form-note">
+        If you want, write something here for me to read later.
+      </p>
+
+      <input
+        id="secretSenderName"
+        class="secret-input"
+        type="text"
+        maxlength="60"
+        placeholder="Your name or leave it blank"
+      />
+
+      <textarea
+        id="secretMessageInput"
+        class="secret-textarea"
+        maxlength="2000"
+        placeholder="Write your secret message here..."
+      ></textarea>
+
+      <div class="modal-buttons">
+        <button id="sendSecretMessageButton" type="button">Send message</button>
+        <button id="cancelSecretMessageButton" type="button">Cancel</button>
+      </div>
+
+      <p id="secretSendStatus" class="send-status"></p>
     </div>
   </div>
 
