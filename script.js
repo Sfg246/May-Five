@@ -39,7 +39,6 @@ let confirmCountdownInterval = null;
 let noMoveInterval = null;
 
 confirmModal.classList.add("hidden");
-secretModal.classList.add("hidden");
 writeSecretModal.classList.add("hidden");
 earlyModal.classList.add("hidden");
 brokenHearts.classList.add("hidden");
