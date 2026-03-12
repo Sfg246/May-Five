@@ -19,29 +19,26 @@
     <section class="locked-box" id="lockedSection">
       <h2>Reserved for May 5</h2>
       <p>This stays locked until the countdown ends.</p>
-      <button id="lockedButton" disabled>🔒 Locked until May 5</button>
+
+      <div class="button-row prelaunch-row" id="buttonArea">
+        <button id="yesButton" type="button">Yes</button>
+        <button id="noButton" type="button">No</button>
+      </div>
+
+      <p id="buttonHint" class="button-hint">The yes button is locked until May 5.</p>
 
       <div class="secret-wrap">
-        <button id="secretButton" class="secret-btn">Open hidden message</button>
-      </div>
-    </section>
-
-    <section id="proposalBox" class="proposal-box hidden">
-      <h2>Now it’s time</h2>
-      <p>Will you go on a date with me?</p>
-      <div class="button-row" id="buttonArea">
-        <button id="yesButton">Yes</button>
-        <button id="noButton">No</button>
+        <button id="secretButton" class="secret-btn" type="button">Open hidden message</button>
       </div>
     </section>
   </main>
 
   <div id="secretModal" class="modal hidden">
     <div class="modal-card">
-      <button id="closeSecretModal" class="close-btn">×</button>
+      <button id="closeSecretModal" class="close-btn" type="button">×</button>
       <h3>A little message for you</h3>
       <p id="secretMessage">
-        Put your personal message here. Something sweet, simple, and real.
+        Put your personal message here. You can make this as sweet and personal as you want.
       </p>
     </div>
   </div>
@@ -51,8 +48,8 @@
       <h3 id="confirmTitle">Are you sure?</h3>
       <p id="confirmText">Think carefully before you answer.</p>
       <div class="modal-buttons">
-        <button id="confirmYes">Yes</button>
-        <button id="confirmNo">Wait no</button>
+        <button id="confirmYes" type="button">Yes</button>
+        <button id="confirmNo" type="button">Wait no</button>
       </div>
     </div>
   </div>
