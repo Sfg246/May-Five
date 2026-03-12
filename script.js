@@ -32,6 +32,8 @@ const confirmTimer = document.getElementById("confirmTimer");
 const buttonArea = document.getElementById("buttonArea");
 const targetDate = new Date("May 5, 2026 00:00:00").getTime();
 
+const SITE_STATE_KEY = "may5_site_state_v1";
+
 let isUnlocked = false;
 let noInteractions = 0;
 let confirmStage = 0;
@@ -42,6 +44,14 @@ confirmModal.classList.add("hidden");
 writeSecretModal.classList.add("hidden");
 earlyModal.classList.add("hidden");
 brokenHearts.classList.add("hidden");
+
+function saveSiteState(state) {
+  localStorage.setItem(SITE_STATE_KEY, state);
+}
+
+function getSiteState() {
+  return localStorage.getItem(SITE_STATE_KEY);
+}
 
 function updateCountdown() {
   const now = new Date().getTime();
@@ -169,16 +179,30 @@ function makeSiteSad() {
   `;
 }
 
+function applyLockedEndingState() {
+  makeSiteSad();
+  secretModal.classList.add("hidden");
+  writeSecretModal.classList.add("hidden");
+  earlyModal.classList.add("hidden");
+  confirmModal.classList.add("hidden");
+}
+
 function closeWriteSecretModalBox() {
   writeSecretModal.classList.add("hidden");
   secretSendStatus.textContent = "";
 }
 
-updateCountdown();
-setInterval(updateCountdown, 1000);
-startNoMovement();
+const savedState = getSiteState();
+if (savedState === "ended") {
+  applyLockedEndingState();
+} else {
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+  startNoMovement();
+}
 
 secretButton.addEventListener("click", () => {
+  if (getSiteState() === "ended") return;
   secretModal.classList.remove("hidden");
 });
 
@@ -193,6 +217,7 @@ secretModal.addEventListener("click", (e) => {
 });
 
 writeSecretButton.addEventListener("click", () => {
+  if (getSiteState() === "ended") return;
   writeSecretModal.classList.remove("hidden");
   secretSendStatus.textContent = "";
 });
@@ -237,12 +262,14 @@ sendSecretMessageButton.addEventListener("click", async () => {
 });
 
 yesButton.addEventListener("mouseenter", () => {
-  if (!isUnlocked) {
+  if (!isUnlocked && getSiteState() !== "ended") {
     buttonHint.textContent = "Still locked until May 5.";
   }
 });
 
 yesButton.addEventListener("click", () => {
+  if (getSiteState() === "ended") return;
+
   if (!isUnlocked) {
     buttonHint.textContent = "Still locked until May 5.";
     earlyModal.classList.remove("hidden");
@@ -278,6 +305,8 @@ earlyModal.addEventListener("click", (e) => {
 });
 
 noButton.addEventListener("click", () => {
+  if (getSiteState() === "ended") return;
+
   noInteractions += 1;
 
   if (noInteractions === 1) {
@@ -318,7 +347,8 @@ confirmYes.addEventListener("click", async () => {
 
   if (confirmStage === 2) {
     await sendSiteNotification("cancel");
+    saveSiteState("ended");
     closeConfirm();
-    makeSiteSad();
+    applyLockedEndingState();
   }
 });
