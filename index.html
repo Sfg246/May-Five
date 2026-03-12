@@ -25,10 +25,20 @@
         <button id="noButton" type="button">No</button>
       </div>
 
-      <p id="buttonHint" class="button-hint">The yes button is locked until May 5.</p>
+      <p id="buttonHint" class="button-hint">
+        The yes button is locked until May 5.
+      </p>
 
       <div class="secret-wrap">
-        <button id="secretButton" class="secret-btn" type="button">Open hidden message</button>
+        <button id="secretButton" class="secret-btn" type="button">
+          Open hidden message
+        </button>
+      </div>
+
+      <div class="early-wrap">
+        <button id="earlyButton" class="early-btn" type="button">
+          changed your mind?
+        </button>
       </div>
     </section>
   </main>
@@ -38,7 +48,17 @@
       <button id="closeSecretModal" class="close-btn" type="button">×</button>
       <h3>A little message for you</h3>
       <p id="secretMessage">
-        Put your personal message here. This can be your sweet note, memory, or anything you want her to read.
+        Put your personal message here. This can be sweet, honest, and fully from you.
+      </p>
+    </div>
+  </div>
+
+  <div id="earlyModal" class="modal hidden">
+    <div class="modal-card">
+      <button id="closeEarlyModal" class="close-btn" type="button">×</button>
+      <h3>If you already know</h3>
+      <p id="earlyMessage">
+        If you don’t want to wait until May 5, and you already know you want this, then text me.
       </p>
     </div>
   </div>
