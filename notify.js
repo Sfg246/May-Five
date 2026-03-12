@@ -16,6 +16,11 @@ async function sendSiteNotification(type, extra = {}) {
       subject: "May 5 site: new secret message",
       message:
         "A new secret message was submitted through the site."
+    },
+    may5_yes: {
+      subject: "May 5 site: she said yes on May 5",
+      message:
+        "She waited until May 5, opened the final reveal, and pressed the final yes button."
     }
   };
 
