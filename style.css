@@ -260,6 +260,67 @@ button:hover {
 .broken-hearts span:nth-child(11) { left: 91%; animation-duration: 14s; animation-delay: 3s; }
 .broken-hearts span:nth-child(12) { left: 52%; animation-duration: 21s; animation-delay: 6s; }
 
+.message-wrap {
+  margin-top: 10px;
+}
+
+.message-btn {
+  background: transparent;
+  border: 1px solid #e4b5c4;
+  color: #a06b7d;
+  font-size: 0.9rem;
+  padding: 10px 18px;
+}
+
+.message-btn:hover {
+  background: rgba(255, 214, 226, 0.45);
+}
+
+.secret-input,
+.secret-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 12px;
+  border: 1px solid #ead1da;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font: inherit;
+  color: #5a3946;
+  background: #fffafc;
+}
+
+.secret-textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.form-note {
+  margin-bottom: 6px;
+}
+
+.send-status {
+  min-height: 22px;
+  margin-top: 14px;
+  font-size: 0.95rem;
+  color: #9a6a79;
+}
+
+#sendSecretMessageButton,
+#cancelSecretMessageButton,
+#earlyYesButton,
+#earlyNoButton {
+  background: #ff6b9a;
+  color: white;
+  box-shadow: 0 8px 18px rgba(255, 107, 154, 0.25);
+}
+
+#sendSecretMessageButton:hover,
+#cancelSecretMessageButton:hover,
+#earlyYesButton:hover,
+#earlyNoButton:hover {
+  background: #ff4f87;
+}
+
 @keyframes floatDown {
   from {
     transform: translateY(-12vh) rotate(0deg);
