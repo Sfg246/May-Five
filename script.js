@@ -14,7 +14,6 @@ const writeSecretModal = document.getElementById("writeSecretModal");
 const closeWriteSecretModalButton = document.getElementById("closeWriteSecretModal");
 const cancelSecretMessageButton = document.getElementById("cancelSecretMessageButton");
 const sendSecretMessageButton = document.getElementById("sendSecretMessageButton");
-const secretSenderName = document.getElementById("secretSenderName");
 const secretMessageInput = document.getElementById("secretMessageInput");
 const secretSendStatus = document.getElementById("secretSendStatus");
 
@@ -215,7 +214,6 @@ writeSecretModal.addEventListener("click", (e) => {
 
 sendSecretMessageButton.addEventListener("click", async () => {
   const rawMessage = secretMessageInput.value.trim();
-  const rawName = secretSenderName.value.trim();
 
   if (!rawMessage) {
     secretSendStatus.textContent = "Please write a message first.";
@@ -226,14 +224,12 @@ sendSecretMessageButton.addEventListener("click", async () => {
   secretSendStatus.textContent = "Sending...";
 
   const result = await sendSiteNotification("secret_message", {
-    sender_name: rawName || "Anonymous",
     secret_message: rawMessage
   });
 
   if (result && result.success) {
     secretSendStatus.textContent = "Your secret message was sent.";
     secretMessageInput.value = "";
-    secretSenderName.value = "";
   } else {
     secretSendStatus.textContent = "Something went wrong. Please try again.";
   }
